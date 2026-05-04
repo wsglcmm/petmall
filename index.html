@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PetMall 寵物電商 (進階篩選版)</title>
+    <title>PetMall 寵物電商</title>
     <!-- 引入 Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -15,10 +15,10 @@
         .product-card:hover { transform: translateY(-5px); }
         .product-img { 
             height: 200px; 
-            width: 100%;       /* 確保寬度充滿容器 */
-            object-fit: contain; /* 關鍵：讓圖片完整縮放顯示在容器內，不裁切 */
-            background-color: #ffffff; /* 如果圖片比例不同，兩邊留白會顯示白色 */
-            padding: 10px;     /* 加一點內距，讓圖片不要貼齊邊框比較美觀 */
+            width: 100%;       
+            object-fit: contain; /*照片不裁*/
+            background-color: #ffffff; /*背景留白*/
+            padding: 10px;     
         }
         .tag-badge { background-color: #ff8c00; color: white; font-size: 0.8rem; margin-right: 5px; }
         /* 智慧搜尋下拉選單的樣式 */
@@ -28,7 +28,7 @@
 </head>
 <body>
 
-    <!-- 頂部導覽列 -->
+    <!-- 頂部列 -->
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
         <div class="container">
             <a class="navbar-brand" href="#" id="logoHome"><i class="fa-solid fa-paw"></i> PetMall</a>            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -36,11 +36,9 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 
-                <!-- 升級 1：智慧搜尋列 -->
                 <form class="d-flex mx-auto w-50 position-relative" id="searchForm">
                     <input class="form-control me-2" type="search" id="searchInput" placeholder="搜尋 (例如：貓砂、無穀)" autocomplete="off">
                     <button class="btn btn-outline-warning" type="submit"><i class="fa-solid fa-search"></i></button>
-                    <!-- 自動補全的下拉選單 -->
                     <ul class="list-group search-suggestions" id="suggestionList"></ul>
                 </form>
 
@@ -54,9 +52,8 @@
         </div>
     </nav>
 
-    <!-- 主要內容區 -->
     <div class="container mt-4">
-        <!-- 分類導覽列與進階篩選按鈕 -->
+        <!-- 寵物分類 -->
         <div class="d-flex flex-wrap justify-content-center align-items-center mb-3 gap-2">
             <div class="btn-group" role="group" id="categoryFilters">
                 <button type="button" class="btn btn-warning active" data-filter="all">全部商品</button>
@@ -64,17 +61,15 @@
                 <button type="button" class="btn btn-outline-warning" data-filter="cat">貓貓館</button>
                 <button type="button" class="btn btn-outline-warning" data-filter="other">小動物/水族</button>
             </div>
-            <!-- 呼叫進階篩選的按鈕 -->
             <button class="btn btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#advancedFilterPanel">
                 <i class="fa-solid fa-filter"></i> 進階篩選
             </button>
         </div>
 
-        <!-- 升級 2：多維度篩選器面板 (預設折疊) -->
+        <!-- 進階篩選，預設摺疊 -->
         <div class="collapse mb-4" id="advancedFilterPanel">
             <div class="card card-body bg-light border-0 shadow-sm">
                 <div class="row g-3">
-                    <!-- 價格區間 -->
                     <div class="col-md-5">
                         <label class="form-label fw-bold">價格區間</label>
                         <div class="input-group input-group-sm">
@@ -84,7 +79,7 @@
                             <input type="number" class="form-control" id="maxPrice" placeholder="最高價">
                         </div>
                     </div>
-                    <!-- 特殊需求標籤 (複選) -->
+                    <!-- 其他特殊要求 -->
                     <div class="col-md-5">
                         <label class="form-label fw-bold">特殊需求</label>
                         <div>
@@ -102,7 +97,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- 操作按鈕 -->
                     <div class="col-md-2 d-flex align-items-end justify-content-end">
                         <button class="btn btn-outline-secondary btn-sm me-2" id="clearFiltersBtn">清除</button>
                         <button class="btn btn-dark btn-sm" id="applyFiltersBtn">套用條件</button>
@@ -111,14 +105,12 @@
             </div>
         </div>
 
-        <!-- 專屬推薦提示 -->
+        <!-- 登入會員的專屬推薦提示 -->
         <div id="recommendationAlert" class="alert alert-info d-none" role="alert">
-            <i class="fa-solid fa-star"></i> 已為您切換至 <strong>熟齡柴犬</strong> 專屬推薦視角！
+            <i class="fa-solid fa-star"></i> 已為您切換至 <strong>您得寵物</strong> 專屬推薦視角！
         </div>
 
-        <!-- 商品列表 -->
         <div class="row g-4" id="productGrid">
-            <!-- 商品卡片會插入在這裡 -->
         </div>
     </div>
 
@@ -129,7 +121,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
         </div>
         <div class="offcanvas-body d-flex flex-column">
-            <!-- 免運進度條區塊 -->
+            <!-- 免運進度條 -->
             <div class="mb-3">
                 <small id="shippingMsg" class="text-muted">還差 $1,500 享免運</small>
                 <div class="progress mt-1" style="height: 10px;">
@@ -184,7 +176,7 @@
                             <label class="form-label fs-6">年齡狀態</label>
                             <select class="form-select form-select-sm" id="petAge">
                                 <option value="adult">一般成犬/成貓</option>
-                                <option value="senior">熟齡 (需要特殊照護)</option>
+                                <option value="senior">熟齡 </option>
                             </select>
                         </div>
                         <button type="submit" class="btn btn-warning btn-sm w-100">儲存檔案並套用專屬推薦</button>
@@ -192,7 +184,6 @@
                 </div>
             </div>
 
-            <!-- 顯示已儲存的毛孩 (預設隱藏) -->
             <div id="savedPetProfile" class="alert alert-success d-none">
                 <strong>目前服務對象：</strong> <span id="displayPetName"></span> <br>
                 <small class="text-muted" id="displayPetInfo"></small>
@@ -205,7 +196,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
     <script>
-        // 商品資料庫 (新增了更多價格差異以利測試篩選)
+        // 商品
         const products = [
             { id: 1, name: "極致無穀低敏狗飼料 2kg", category: "dog", price: 890, tags: ["無穀", "低敏"], isForSenior: true,
              imageUrl : "./images/低敏狗飼料.webp" },
@@ -235,14 +226,11 @@
 
         let cart = [];
 
-        // ==========================================
-        // 核心架構：狀態管理 (State Management)
-        // ==========================================
         let filterState = {
-            category: 'all',     // 館別
-            keyword: '',         // 搜尋關鍵字
-            minPrice: null,      // 最低價
-            maxPrice: null,      // 最高價
+            category: 'all',     
+            keyword: '',        
+            minPrice: null,      
+            maxPrice: null,      
             selectedTags: [],    // 勾選的標籤
             isPetLogin: false    // 是否開啟毛孩視角
         };
@@ -251,22 +239,22 @@
         function applyAndRender() {
             let result = products;
 
-            // 1. 過濾：毛孩視角
+            // 1. 套用自己個人檔案推薦商品
             if (filterState.isPetLogin) {
                 result = result.filter(p => p.isForSenior);
             }
-            // 2. 過濾：館別 (如果在毛孩視角，強制忽略館別分類)
+            // 2.篩選狗/貓/其他動物
             else if (filterState.category !== 'all') {
                 result = result.filter(p => p.category === filterState.category || p.category === 'all');
             }
 
-            // 3. 過濾：搜尋關鍵字
+            // 3. 搜尋關鍵字
             if (filterState.keyword) {
                 const kw = filterState.keyword.toLowerCase();
                 result = result.filter(p => p.name.toLowerCase().includes(kw));
             }
 
-            // 4. 過濾：價格區間
+            // 4. 價格區間
             if (filterState.minPrice !== null) {
                 result = result.filter(p => p.price >= filterState.minPrice);
             }
@@ -274,7 +262,7 @@
                 result = result.filter(p => p.price <= filterState.maxPrice);
             }
 
-            // 5. 過濾：特殊標籤 (只要符合其中一個勾選的標籤就顯示)
+            // 5. 特殊篩選條件
             if (filterState.selectedTags.length > 0) {
                 result = result.filter(p => 
                     filterState.selectedTags.some(tag => p.tags.includes(tag))
@@ -284,8 +272,6 @@
             renderToDOM(result);
         }
 
-        // 將陣列畫到 HTML 上
-        // 找到這個函數並修改中間的 HTML 部分
 function renderToDOM(filteredProducts) {
     const grid = document.getElementById('productGrid');
     grid.innerHTML = ''; 
@@ -298,18 +284,18 @@ function renderToDOM(filteredProducts) {
     filteredProducts.forEach(product => {
         const tagsHtml = product.tags.map(tag => `<span class="badge tag-badge">${tag}</span>`).join('');
         
-        // 關鍵修改處：將原本的 <i> 圖示換成下面的 <img> 標籤
+        // 原本的預設圖片改成images裡的
         grid.innerHTML += `
             <div class="col-6 col-md-4 col-lg-3">
                 <div class="card product-card h-100">
-                    <!-- 修改這裡：讀取 product.imageUrl -->
                     <img src="${product.imageUrl}" class="card-img-top product-img" alt="${product.name}" style="height: 200px; object-fit: cotain;">
                     
                     <div class="card-body d-flex flex-column">
                         <div class="mb-2">${tagsHtml}</div>
                         <h6 class="card-title text-truncate">${product.name}</h6>
                         <p class="card-text text-danger fw-bold mt-auto">$${product.price.toLocaleString()}</p>
-                        <button class="btn btn-outline-warning btn-sm w-100 mt-2" onclick="addToCart(${product.id})">
+                        <button class="btn btn-outline-warning btn-sm w-100 mt-2" onclick="addToCart(${product.id})">     <!-- 加進購物車 -->
+
                             <i class="fa-solid fa-plus"></i> 加入
                         </button>
                     </div>
@@ -318,14 +304,9 @@ function renderToDOM(filteredProducts) {
     });
 }
 
-        // ==========================================
-        // 互動事件監聽區
-        // ==========================================
-
-        // 1. 館別按鈕點擊
         document.getElementById('categoryFilters').addEventListener('click', function(e) {
             if(e.target.tagName === 'BUTTON') {
-                // 改變按鈕顏色
+                // 改變按鈕顏色，點及寵物館別按鈕變成亮橘色(原本白色)
                 document.querySelectorAll('#categoryFilters button').forEach(btn => {
                     btn.classList.replace('btn-warning', 'btn-outline-warning');
                     btn.classList.remove('active');
@@ -333,13 +314,12 @@ function renderToDOM(filteredProducts) {
                 e.target.classList.replace('btn-outline-warning', 'btn-warning');
                 e.target.classList.add('active');
                 
-                // 更新狀態並渲染
                 filterState.category = e.target.dataset.filter;
                 applyAndRender();
             }
         });
 
-        // 2. 智慧搜尋列 (自動補全 Auto-complete)
+        // 2. 智慧搜尋，推薦品項
         const searchInput = document.getElementById('searchInput');
         const suggestionList = document.getElementById('suggestionList');
 
@@ -351,8 +331,8 @@ function renderToDOM(filteredProducts) {
                 return;
             }
 
-            // 尋找符合的商品名稱，最多顯示 5 筆
-            const matches = products.filter(p => p.name.toLowerCase().includes(kw)).slice(0, 5);
+            // 尋找符合的商品名稱
+            const matches = products.filter(p => p.name.toLowerCase().includes(kw)).slice();
             
             if (matches.length > 0) {
                 suggestionList.innerHTML = matches.map(m => 
@@ -373,7 +353,7 @@ function renderToDOM(filteredProducts) {
             applyAndRender();
         };
 
-        // 送出搜尋表單 (按下 Enter 或放大鏡)
+        // 執行搜尋
         document.getElementById('searchForm').addEventListener('submit', function(e) {
             e.preventDefault();
             filterState.keyword = searchInput.value.trim();
@@ -388,7 +368,7 @@ function renderToDOM(filteredProducts) {
             }
         });
 
-        // 3. 進階篩選：套用按鈕
+        // 3. 進階篩選案鈕
         document.getElementById('applyFiltersBtn').addEventListener('click', function() {
             const min = document.getElementById('minPrice').value;
             const max = document.getElementById('maxPrice').value;
@@ -403,7 +383,7 @@ function renderToDOM(filteredProducts) {
             applyAndRender();
         });
 
-        // 4. 進階篩選：清除按鈕
+        // 4. 進階篩選清除按鈕
         document.getElementById('clearFiltersBtn').addEventListener('click', function() {
             document.getElementById('minPrice').value = '';
             document.getElementById('maxPrice').value = '';
@@ -498,15 +478,13 @@ function renderToDOM(filteredProducts) {
             allBtn.classList.replace('btn-outline-warning', 'btn-warning');
             allBtn.classList.add('active');
 
-            // 4. 重新渲染畫面
+           
             applyAndRender();
         });
 
         // 初始化第一次渲染畫面
         applyAndRender();
-        // ==========================================
-        // 會員中心與毛孩檔案邏輯 (前端模擬版)
-        // ==========================================
+        //會員中心
         const petProfileForm = document.getElementById('petProfileForm');
         
         petProfileForm.addEventListener('submit', function(e) {
